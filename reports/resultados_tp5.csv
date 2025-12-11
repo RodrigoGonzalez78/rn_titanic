@@ -1,0 +1,5 @@
+ID,Descripción,Accuracy,Precision,Recall,F1-Score,Params
+BASE,Modelo Base (Simple),0.8324,0.8095,0.7391,0.7727,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'learning_rate_init': 0.001, 'max_iter': 2000, 'random_state': 42}"
+EXP_ARQ,Var: Arquitectura (Profunda),0.7877,0.7313,0.7101,0.7206,"{'hidden_layer_sizes': (50, 25), 'activation': 'relu', 'learning_rate_init': 0.001, 'max_iter': 2000, 'random_state': 42}"
+EXP_ACT,Var: Activación (Tanh),0.7933,0.7424,0.7101,0.7259,"{'hidden_layer_sizes': (10,), 'activation': 'tanh', 'learning_rate_init': 0.001, 'max_iter': 2000, 'random_state': 42}"
+EXP_LR,Var: Learning Rate (Lento),0.7989,0.7619,0.6957,0.7273,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'learning_rate_init': 0.0001, 'max_iter': 2000, 'random_state': 42}"

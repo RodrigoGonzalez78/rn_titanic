@@ -1,0 +1,10 @@
+ID,Descripción,Accuracy,Precision,Recall,F1-Score,Tiempo (s),Params
+7_LBFGS_OPTIM,Solver LBFGS (Matemático),0.8101,0.7397,0.7826,0.7606,0.4238,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'lbfgs', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 5000, 'random_state': 42}"
+1_BASE,Reference (Simple),0.8212,0.7937,0.7246,0.7576,0.3669,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+4_ACTIVATION,Activación Tanh,0.7989,0.7463,0.7246,0.7353,0.6912,"{'hidden_layer_sizes': (10,), 'activation': 'tanh', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+8_PYRAMID,Pirámide (30->15),0.7989,0.7463,0.7246,0.7353,1.2649,"{'hidden_layer_sizes': (30, 15), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.01, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+2_DEEP,Deep Network (Profunda),0.7877,0.7246,0.7246,0.7246,1.0986,"{'hidden_layer_sizes': (64, 32, 16, 8), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+5_SOLVER_SGD,Optimizador SGD,0.7989,0.7797,0.6667,0.7188,0.3924,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'sgd', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42, 'learning_rate': 'adaptive'}"
+6_REGULARIZED,Alta Regularización,0.7821,0.7206,0.7101,0.7153,1.5141,"{'hidden_layer_sizes': (100, 50), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.05, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+9_SLOW_LEARN,Aprendizaje Fino,0.7989,0.7895,0.6522,0.7143,0.4329,"{'hidden_layer_sizes': (20,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.0005, 'max_iter': 5000, 'random_state': 42}"
+3_WIDE,Wide Network (Ancha),0.7709,0.7059,0.6957,0.7007,1.8589,"{'hidden_layer_sizes': (100,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"

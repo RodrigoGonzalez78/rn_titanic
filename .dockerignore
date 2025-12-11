@@ -22,17 +22,25 @@ env/
 # Jupyter Notebook
 .ipynb_checkpoints/
 
-# Data files (uncomment if needed)
-# data/raw/*.csv
-# data/processed/
-
-# Models (uncomment to exclude from git)
-# models/trained/*.joblib
-# models/artifacts/*.joblib
-
 # OS files
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Docs
+README.md
+*.md
+
+# Tests
+tests/

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  titanic-dashboard:
+    build: .
+    container_name: titanic-ml
+    ports:
+      - "5000:5001"
+    volumes:
+      # Persistir modelos entrenados
+      - titanic-models:/app/models
+      # Persistir reportes
+      - titanic-reports:/app/reports
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
+volumes:
+  titanic-models:
+  titanic-reports:
