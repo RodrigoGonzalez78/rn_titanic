@@ -219,10 +219,163 @@ app, rt = fast_app(
             }
             
             .model-link:hover { text-decoration: underline; }
+            
+            .params-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1rem;
+            }
+            
+            .param-item {
+                background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(88, 166, 255, 0.05) 100%);
+                border-radius: 12px;
+                padding: 1rem 1.25rem;
+                border-left: 3px solid var(--accent);
+                transition: all 0.3s ease;
+            }
+            
+            .param-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15);
+                border-left-color: var(--accent-light);
+            }
+            
+            .param-label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.8rem;
+                color: var(--text-secondary);
+                margin-bottom: 0.4rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            
+            .param-value {
+                font-size: 1.1rem;
+                color: var(--success);
+                font-weight: 600;
+                font-family: 'Fira Code', 'Consolas', monospace;
+                word-break: break-word;
+            }
+            
+            .param-value.string { color: #a5d6ff; }
+            .param-value.number { color: #79c0ff; }
+            .param-value.bool { color: #d2a8ff; }
+            .param-value.none { color: var(--text-secondary); font-style: italic; }
+            
+            .param-icon {
+                font-size: 1rem;
+            }
         """),
     ),
     title="🚢 Dashboard Titanic - IA Conexionista"
 )
+
+import json
+
+def crear_seccion_parametros(modelo_info):
+    """Crea una sección visual para los parámetros del modelo"""
+    params_raw = modelo_info.get('Params', 'N/A')
+    
+    # Si no hay parámetros, mostrar mensaje simple
+    if not params_raw or params_raw == 'N/A':
+        return Div(
+            H2("⚙️ Parámetros"),
+            P("No hay información de parámetros disponible", style="color: var(--text-secondary); font-style: italic;"),
+            cls="card"
+        )
+    
+    # Intentar parsear como JSON o diccionario de Python
+    try:
+        if isinstance(params_raw, str):
+            # Limpiar el string para parseo
+            params_str = params_raw.strip()
+            # Convertir sintaxis de Python a JSON donde sea posible
+            # Reemplazar tuplas (10,) por listas [10]
+            import re
+            params_str = re.sub(r'\((\d+),\)', r'[\1]', params_str)
+            params_str = re.sub(r'\((\d+,\s*\d+(?:,\s*\d+)*)\)', r'[\1]', params_str)
+            params_str = params_str.replace("'", '"')
+            params_str = params_str.replace("True", "true").replace("False", "false")
+            params_str = params_str.replace("None", "null")
+            params = json.loads(params_str)
+        else:
+            params = params_raw
+    except Exception as e:
+        # Si falla el parseo, mostrar como texto formateado
+        return Div(
+            H2("⚙️ Parámetros"),
+            Pre(str(params_raw), style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; overflow-x: auto; white-space: pre-wrap;"),
+            cls="card"
+        )
+    
+    # Mapeo de nombres de parámetros a descripciones e iconos más amigables
+    param_labels = {
+        'hidden_layer_sizes': ('🧠', 'Capas Ocultas'),
+        'hidden_layers': ('🧠', 'Capas Ocultas'),
+        'activation': ('⚡', 'Función de Activación'),
+        'solver': ('🔧', 'Optimizador'),
+        'alpha': ('📊', 'Regularización (alpha)'),
+        'learning_rate': ('📈', 'Tasa de Aprendizaje'),
+        'learning_rate_init': ('🚀', 'LR Inicial'),
+        'max_iter': ('🔄', 'Iteraciones Máx.'),
+        'batch_size': ('📦', 'Tamaño de Batch'),
+        'momentum': ('💨', 'Momentum'),
+        'early_stopping': ('🛑', 'Parada Temprana'),
+        'validation_fraction': ('✅', 'Fracción Validación'),
+        'n_iter_no_change': ('⏳', 'Iteraciones Sin Cambio'),
+        'tol': ('🎯', 'Tolerancia'),
+        'random_state': ('🎲', 'Semilla Aleatoria'),
+        'shuffle': ('🔀', 'Mezclar Datos'),
+        'verbose': ('📝', 'Modo Verbose'),
+        'warm_start': ('🔥', 'Inicio Caliente'),
+        'nesterovs_momentum': ('🏃', 'Momentum Nesterov'),
+        'beta_1': ('β₁', 'Beta 1 (Adam)'),
+        'beta_2': ('β₂', 'Beta 2 (Adam)'),
+        'epsilon': ('ε', 'Epsilon'),
+        'power_t': ('📉', 'Power T'),
+    }
+    
+    # Crear items de parámetros
+    param_items = []
+    for key, value in params.items():
+        icon, label = param_labels.get(key, ('⚙️', key.replace('_', ' ').title()))
+        
+        # Determinar clase de estilo según tipo de valor
+        if value is None:
+            value_class = "param-value none"
+            display_value = "Auto"
+        elif isinstance(value, bool):
+            value_class = "param-value bool"
+            display_value = "Sí ✓" if value else "No ✗"
+        elif isinstance(value, (int, float)):
+            value_class = "param-value number"
+            display_value = str(value)
+        elif isinstance(value, (list, tuple)):
+            value_class = "param-value string"
+            display_value = str(value)
+        else:
+            value_class = "param-value string"
+            display_value = str(value)
+        
+        param_items.append(
+            Div(
+                Div(
+                    Span(icon, cls="param-icon"),
+                    Span(label),
+                    cls="param-label"
+                ),
+                Div(display_value, cls=value_class),
+                cls="param-item"
+            )
+        )
+    
+    return Div(
+        H2("⚙️ Parámetros del Modelo"),
+        Div(*param_items, cls="params-grid"),
+        cls="card"
+    )
 
 def nav_bar(active=""):
     return Div(
@@ -327,11 +480,7 @@ def modelo_detalle(model_id: str):
             cls="card"
         ),
         
-        Div(
-            H2("⚙️ Parámetros"),
-            Pre(modelo_info.get('Params', 'N/A')),
-            cls="card"
-        ),
+        crear_seccion_parametros(modelo_info),
         
         roc_html,
         
