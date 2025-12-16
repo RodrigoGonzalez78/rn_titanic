@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-"""
-Titanic ML Dashboard - Servidor Web
-
-Uso:
-    python run_dashboard.py
-"""
 import sys
 from pathlib import Path
 

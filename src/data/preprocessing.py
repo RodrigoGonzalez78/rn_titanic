@@ -1,6 +1,3 @@
-"""
-Módulo de preprocesamiento de datos
-"""
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from imblearn.over_sampling import SMOTE

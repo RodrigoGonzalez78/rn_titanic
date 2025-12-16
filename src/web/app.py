@@ -1,7 +1,3 @@
-"""
-Dashboard Web para visualizar métricas y probar modelos Titanic
-Usando FastHTML
-"""
 from fasthtml.common import *
 import sys
 from pathlib import Path

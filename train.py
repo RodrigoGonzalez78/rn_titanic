@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-"""
-Titanic Survival Prediction - Script Principal de Entrenamiento
-TP5 - IA Conexionista
-
-Uso:
-    python train.py
-"""
 import sys
 from pathlib import Path
 import pandas as pd
@@ -33,7 +25,6 @@ def main():
     base_params = settings.DEFAULT_MODEL_PARAMS.copy()
 
     experimentos = [
-        # --- GRUPO 1: Arquitectura ---
         {
             "id": "1_BASE",
             "nombre": "Reference (Simple)",
@@ -50,7 +41,6 @@ def main():
             "params": {**base_params, "hidden_layer_sizes": (100,)} 
         },
 
-        # --- GRUPO 2: Hiperparámetros de Aprendizaje ---
         {
             "id": "4_ACTIVATION",
             "nombre": "Activación Tanh",
@@ -62,16 +52,8 @@ def main():
             "params": {**base_params, "solver": "sgd", "learning_rate": "adaptive"} 
         },
         
-        # --- GRUPO 3: Regularización ---
         {
-            "id": "6_REGULARIZED",
-            "nombre": "Alta Regularización",
-            "params": {**base_params, "hidden_layer_sizes": (100, 50), "alpha": 0.05} 
-        },
-        
-        # --- GRUPO 4: Solvers Alternativos ---
-        {
-            "id": "7_LBFGS_OPTIM",
+            "id": "6_LBFGS_OPTIM",
             "nombre": "Solver LBFGS (Matemático)",
             "params": {
                 **base_params, 
@@ -80,27 +62,6 @@ def main():
             }
         },
 
-        # --- GRUPO 5: Arquitecturas Alternativas ---
-        {
-            "id": "8_PYRAMID",
-            "nombre": "Pirámide (30->15)",
-            "params": {
-                **base_params,
-                "hidden_layer_sizes": (30, 15),
-                "alpha": 0.01
-            }
-        },
-
-        {
-            "id": "9_SLOW_LEARN",
-            "nombre": "Aprendizaje Fino",
-            "params": {
-                **base_params,
-                "hidden_layer_sizes": (20,),
-                "learning_rate_init": 0.0005,
-                "max_iter": 5000
-            }
-        }
     ]
     
     # 4. Ejecución

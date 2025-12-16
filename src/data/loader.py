@@ -1,6 +1,3 @@
-"""
-Módulo de carga de datos del Titanic
-"""
 import pandas as pd
 import sys
 from pathlib import Path

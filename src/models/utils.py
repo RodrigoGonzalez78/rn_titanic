@@ -1,6 +1,3 @@
-"""
-Utilidades para carga de modelos y predicciones
-"""
 import joblib
 import pandas as pd
 import numpy as np
