@@ -1,7 +1,7 @@
-ID,Descripción,Accuracy,Precision,Recall,F1-Score,Tiempo (s),Params
-6_LBFGS_OPTIM,Solver LBFGS (Matemático),0.8101,0.7397,0.7826,0.7606,0.3857,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'lbfgs', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 5000, 'random_state': 42}"
-1_BASE,Reference (Simple),0.8212,0.7937,0.7246,0.7576,0.4025,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
-4_ACTIVATION,Activación Tanh,0.7989,0.7463,0.7246,0.7353,0.7006,"{'hidden_layer_sizes': (10,), 'activation': 'tanh', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
-2_DEEP,Deep Network (Profunda),0.7877,0.7246,0.7246,0.7246,1.1465,"{'hidden_layer_sizes': (64, 32, 16, 8), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
-5_SOLVER_SGD,Optimizador SGD,0.7989,0.7797,0.6667,0.7188,0.3931,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'sgd', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42, 'learning_rate': 'adaptive'}"
-3_WIDE,Wide Network (Ancha),0.7709,0.7059,0.6957,0.7007,1.915,"{'hidden_layer_sizes': (100,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+ID,Descripción,Accuracy,Precision,Recall,F1-Score,Val_Accuracy,Val_F1,Tiempo (s),Params
+1_BASE,Reference (Simple),0.8101,0.7778,0.7101,0.7424,0.8252,0.7573,0.3937,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+5_SOLVER_SGD,Optimizador SGD,0.8045,0.7742,0.6957,0.7328,0.7902,0.717,0.4156,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'sgd', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42, 'learning_rate': 'adaptive'}"
+2_DEEP,Deep Network (Profunda),0.7765,0.7042,0.7246,0.7143,0.8392,0.785,1.1172,"{'hidden_layer_sizes': (64, 32, 16, 8), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+6_LBFGS_OPTIM,Solver LBFGS (Matemático),0.7709,0.7,0.7101,0.705,0.7762,0.6981,0.384,"{'hidden_layer_sizes': (10,), 'activation': 'relu', 'solver': 'lbfgs', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 5000, 'random_state': 42}"
+4_ACTIVATION,Activación Tanh,0.7765,0.7231,0.6812,0.7015,0.8112,0.7429,0.8601,"{'hidden_layer_sizes': (10,), 'activation': 'tanh', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"
+3_WIDE,Wide Network (Ancha),0.7709,0.7121,0.6812,0.6963,0.8322,0.7736,1.8732,"{'hidden_layer_sizes': (100,), 'activation': 'relu', 'solver': 'adam', 'alpha': 0.0001, 'learning_rate_init': 0.001, 'max_iter': 3000, 'random_state': 42}"

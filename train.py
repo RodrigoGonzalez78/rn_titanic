@@ -18,8 +18,8 @@ def main():
     # 1. Carga
     df_raw = cargar_y_limpiar_titanic()
     
-    # 2. Preprocesamiento
-    X_train, X_test, y_train, y_test = preparar_datos(df_raw)
+    # 2. Preprocesamiento (ahora incluye conjunto de validación)
+    X_train, X_val, X_test, y_train, y_val, y_test = preparar_datos(df_raw)
     
     # 3. Definición de Experimentos
     base_params = settings.DEFAULT_MODEL_PARAMS.copy()
@@ -70,7 +70,7 @@ def main():
     print(f"\n--- INICIANDO BATERÍA DE {len(experimentos)} EXPERIMENTOS ---")
     
     for exp in experimentos:
-        res = entrenar_y_evaluar(exp, X_train, y_train, X_test, y_test)
+        res = entrenar_y_evaluar(exp, X_train, y_train, X_val, y_val, X_test, y_test)
         resultados.append(res)
         
     df_resultados = pd.DataFrame(resultados)

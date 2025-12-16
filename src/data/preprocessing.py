@@ -10,10 +10,19 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from config import settings
 
-def preparar_datos(df, target_col='Survived'):
+def preparar_datos(df, target_col='Survived', test_size=0.2, val_size=0.2):
     """
     Prepara los datos para entrenamiento: encoding, split, balanceo y escalado.
     Guarda el scaler y los nombres de features para uso posterior.
+    
+    Args:
+        df: DataFrame con los datos
+        target_col: Nombre de la columna objetivo
+        test_size: Proporción para test (del total)
+        val_size: Proporción para validación (del conjunto train)
+    
+    Returns:
+        X_train, X_val, X_test, y_train, y_val, y_test
     """
     # Asegurar que existan los directorios
     settings.ensure_dirs()
@@ -31,10 +40,20 @@ def preparar_datos(df, target_col='Survived'):
     X = df.drop(target_col, axis=1)
     y = df[target_col]
 
-    # Split (División) - 80% Train, 20% Test
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+    # Split (División) - Primero separamos Test (20% del total)
+    X_temp, X_test, y_temp, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=42, stratify=y
     )
+    
+    # Luego separamos Validation del resto (20% del 80% = 16% del total)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_temp, y_temp, test_size=val_size, random_state=42, stratify=y_temp
+    )
+    
+    print(f"División de datos:")
+    print(f"  - Train: {len(y_train)} ({len(y_train)/len(y)*100:.1f}%)")
+    print(f"  - Validation: {len(y_val)} ({len(y_val)/len(y)*100:.1f}%)")
+    print(f"  - Test: {len(y_test)} ({len(y_test)/len(y)*100:.1f}%)")
 
     # Balanceo (Solo en Training)
     smote = SMOTE(random_state=42)
@@ -44,6 +63,7 @@ def preparar_datos(df, target_col='Survived'):
     # Escalado (StandardScaler)
     scaler = StandardScaler()
     X_train_final = scaler.fit_transform(X_train_res)
+    X_val_final = scaler.transform(X_val)
     X_test_final = scaler.transform(X_test)
     
     # Guardar el scaler para uso en predicciones
@@ -55,4 +75,4 @@ def preparar_datos(df, target_col='Survived'):
     feature_names_path = settings.get_feature_names_path()
     joblib.dump(list(X.columns), feature_names_path)
 
-    return X_train_final, X_test_final, y_train_res, y_test
+    return X_train_final, X_val_final, X_test_final, y_train_res, y_val, y_test

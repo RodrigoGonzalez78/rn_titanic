@@ -10,11 +10,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from config import settings
 
-def entrenar_y_evaluar(config, X_train, y_train, X_test, y_test):
+def entrenar_y_evaluar(config, X_train, y_train, X_val, y_val, X_test, y_test):
     """
     Crea un modelo basado en 'config', lo entrena y evalúa.
     Guarda el modelo entrenado en la carpeta 'models/trained/'.
-    Retorna un diccionario con los resultados.
+    Retorna un diccionario con los resultados de validación y test.
     """
     # Asegurar que existan los directorios
     settings.ensure_dirs()
@@ -34,17 +34,24 @@ def entrenar_y_evaluar(config, X_train, y_train, X_test, y_test):
     end_time = time.time()
     tiempo_total = round(end_time - start_time, 4)
     
-    # Predicción
-    y_pred = clf.predict(X_test)
+    # Predicción en Validación
+    y_val_pred = clf.predict(X_val)
+    
+    # Predicción en Test
+    y_test_pred = clf.predict(X_test)
     
     # Cálculo de Métricas
     metrics = {
         "ID": config.get('id'),
         "Descripción": nombre,
-        "Accuracy": round(accuracy_score(y_test, y_pred), 4),
-        "Precision": round(precision_score(y_test, y_pred), 4),
-        "Recall": round(recall_score(y_test, y_pred), 4),
-        "F1-Score": round(f1_score(y_test, y_pred), 4),
+        # Métricas de Test (usando nombres originales)
+        "Accuracy": round(accuracy_score(y_test, y_test_pred), 4),
+        "Precision": round(precision_score(y_test, y_test_pred), 4),
+        "Recall": round(recall_score(y_test, y_test_pred), 4),
+        "F1-Score": round(f1_score(y_test, y_test_pred), 4),
+        # Métricas de Validación (guardadas para referencia)
+        "Val_Accuracy": round(accuracy_score(y_val, y_val_pred), 4),
+        "Val_F1": round(f1_score(y_val, y_val_pred), 4),
         "Tiempo (s)": tiempo_total,
         "Params": str(params)
     }
